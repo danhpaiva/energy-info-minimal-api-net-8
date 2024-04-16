@@ -19,10 +19,10 @@ namespace EnergyInfoApi.Context
                                     .HasMaxLength(6)
                                     .IsRequired();
             mb.Entity<Localizacao>().Property(c => c.Latitude)
-                                   .HasMaxLength(15)
+                                   .HasMaxLength(25)
                                    .IsRequired();
             mb.Entity<Localizacao>().Property(c => c.Longitude)
-                                   .HasMaxLength(15)
+                                   .HasMaxLength(25)
                                    .IsRequired();
             mb.Entity<Localizacao>().Property(c => c.FonteEnergetica)
                                    .HasMaxLength(15)
