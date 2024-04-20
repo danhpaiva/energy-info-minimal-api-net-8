@@ -17,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Lista de Localizações");
+app.MapGet("/", () => "Lista de Localizações").ExcludeFromDescription();
 
 app.MapPost("/localizacoes", async (Localizacao localizacao, AppDbContext db)
     =>
