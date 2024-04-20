@@ -29,6 +29,15 @@ app.MapPost("/localizacoes", async (Localizacao localizacao, AppDbContext db)
 
 app.MapGet("localizacoes", async (AppDbContext db) => await db.Localizacoes.ToListAsync());
 
+app.MapGet("/categorias/{id:int}", async (int id, AppDbContext db)
+    =>
+{
+    return await db.Localizacoes.FindAsync(id)
+        is Localizacao localizacao
+        ? Results.Ok(localizacao)
+        : Results.NotFound();
+});
+
 // Configure the HTTP request pipeline. ("Configure")
 if (app.Environment.IsDevelopment())
 {
