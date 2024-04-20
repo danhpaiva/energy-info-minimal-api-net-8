@@ -61,6 +61,18 @@ app.MapPut("/localizacoes/{id:int}", async (int id, Localizacao localizacao, App
     return Results.Ok(localizacaoDb);
 });
 
+app.MapDelete("/localizacoes/{id:int}", async (int id, AppDbContext db) =>
+{
+    var localizacao = await db.Localizacoes.FindAsync(id);
+
+    if (localizacao is null) return Results.NotFound();
+
+    db.Localizacoes.Remove(localizacao);
+    await db.SaveChangesAsync();
+
+    return Results.Ok();
+});
+
 // Configure the HTTP request pipeline. ("Configure")
 if (app.Environment.IsDevelopment())
 {
