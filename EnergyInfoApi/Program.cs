@@ -38,6 +38,29 @@ app.MapGet("/categorias/{id:int}", async (int id, AppDbContext db)
         : Results.NotFound();
 });
 
+app.MapPut("/localizacoes/{id:int}", async (int id, Localizacao localizacao, AppDbContext db) =>
+{
+    if (localizacao.LocalizacaoId != id)
+        return Results.BadRequest();
+
+    var localizacaoDb = await db.Localizacoes.FindAsync(id);
+
+    if (localizacaoDb is null) return Results.NotFound();
+
+    localizacaoDb.Nome = localizacao.Nome;
+    localizacaoDb.Codigo = localizacao.Codigo;
+    localizacaoDb.Latitude = localizacao.Latitude;
+    localizacaoDb.Longitude = localizacao.Longitude;
+    localizacaoDb.FonteEnergetica = localizacao.FonteEnergetica;
+    localizacaoDb.PowerOutput = localizacao.PowerOutput;
+    localizacaoDb.UnidadeMedida = localizacao.UnidadeMedida;
+    localizacaoDb.DataAtualizacao = localizacao.DataAtualizacao;
+
+    await db.SaveChangesAsync();
+
+    return Results.Ok(localizacaoDb);
+});
+
 // Configure the HTTP request pipeline. ("Configure")
 if (app.Environment.IsDevelopment())
 {
